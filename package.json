@@ -1,0 +1,44 @@
+{
+  "name": "solana-agent-kit-plugin-risk-api",
+  "version": "1.0.0",
+  "description": "Solana Agent Kit plugin for the TNT House Risk-Data API — Solana token risk scoring and on-chain insider wallet cluster detection.",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "keywords": [
+    "solana-agent-kit",
+    "solana",
+    "risk-scoring",
+    "trading",
+    "security",
+    "sendai"
+  ],
+  "author": "TNT House",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/menantonio83-hue/solana-agent-kit-plugin-risk-api.git"
+  },
+  "homepage": "https://www.tnt-audit.com/risk-api",
+  "bugs": {
+    "url": "https://github.com/menantonio83-hue/solana-agent-kit-plugin-risk-api/issues"
+  },
+  "dependencies": {
+    "zod": "^3.23.0"
+  },
+  "peerDependencies": {
+    "solana-agent-kit": "^2.0.0"
+  },
+  "devDependencies": {
+    "solana-agent-kit": "^2.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  }
+}
