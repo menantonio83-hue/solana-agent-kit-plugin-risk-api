@@ -1,6 +1,10 @@
 # solana-agent-kit-plugin-risk-api
 
-A [Solana Agent Kit](https://kit.sendai.fun/) plugin that gives your agent a **`CHECK_TOKEN_RISK`** action, backed by the [TNT House Risk-Data API](https://www.tnt-audit.com/risk-api).
+A [Solana Agent Kit](https://kit.sendai.fun/) plugin that gives your agent a **`CHECK_TOKEN_RISK`** action, backed by RiskDataApi.
+
+Docs: https://www.tnt-audit.com/risk-api/docs
+Free key (15/day): email on https://www.tnt-audit.com/risk-api
+Agents can skip the key and use x402 $0.02/call.
 
 Before your agent trades a Solana token, it can check:
 
