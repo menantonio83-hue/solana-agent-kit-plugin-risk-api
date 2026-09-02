@@ -1,7 +1,7 @@
 {
   "name": "solana-agent-kit-plugin-risk-api",
-  "version": "1.0.0",
-  "description": "Solana Agent Kit plugin for the TNT House Risk-Data API — Solana token risk scoring and on-chain insider wallet cluster detection.",
+  "version": "1.0.1",
+  "description": "Solana Agent Kit plugin for RiskDataApi — Solana token risk scoring and on-chain insider wallet cluster detection.",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
