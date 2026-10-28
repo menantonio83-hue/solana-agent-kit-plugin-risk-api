@@ -4,7 +4,9 @@ A [Solana Agent Kit](https://kit.sendai.fun/) plugin that gives your agent a **`
 
 Docs: https://www.tnt-audit.com/risk-api/docs
 Free key (15/day): email on https://www.tnt-audit.com/risk-api
-Agents can skip the key and use x402 $0.02/call.
+Agents can also skip the key and pay per call via x402 ($0.02 USDC on Solana) at
+https://www.tnt-audit.com/api/v1/token-risk/x402?mint=<MINT> — x402 payment is not built
+into this plugin; use an x402 client for that endpoint.
 
 Before your agent trades a Solana token, it can check:
 
@@ -49,7 +51,7 @@ console.log(formatRiskSummary(result));
 
 ## Configuration
 
-Get a free API key (15 requests/day, no card required) at **[tnt-audit.com/risk-api](https://www.tnt-audit.com/risk-api)**.
+Get a free API key (15 requests/day, no card required) at **[www.tnt-audit.com/risk-api](https://www.tnt-audit.com/risk-api)**.
 
 The plugin reads the key from `agent.config.OTHER_API_KEYS.TNT_RISK_API_KEY`, falling back to the `TNT_RISK_API_KEY` environment variable if that's not set.
 
@@ -59,7 +61,7 @@ On a mint's **first-ever** check, `cluster_analysis` comes back `"pending"` whil
 
 ## Docs
 
-Full API reference, response schema, and rate limits: **[tnt-audit.com/risk-api](https://www.tnt-audit.com/risk-api)**
+Full API reference, response schema, and rate limits: **[www.tnt-audit.com/risk-api](https://www.tnt-audit.com/risk-api)**
 
 ## License
 

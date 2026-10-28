@@ -1,4 +1,6 @@
-const API_BASE_URL = "https://tnt-audit.com";
+// Must be the www host: the bare domain answers with a 308 redirect, and
+// fetch drops the Authorization header on that cross-origin redirect.
+const API_BASE_URL = "https://www.tnt-audit.com";
 
 export interface InsiderCluster {
   funder: string;
@@ -13,7 +15,7 @@ export interface TokenRiskResult {
   mint_authority: { revoked: boolean; address: string | null };
   freeze_authority: { revoked: boolean; address: string | null };
   honeypot_risk: boolean | null;
-  lp_locked: boolean | null;
+  lp_locked: { locked: boolean; percent: number } | null;
   holder_distribution: {
     risk_level: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL" | "ERROR";
   };
@@ -38,20 +40,34 @@ export async function checkTokenRisk(
   });
 
   if (!response.ok) {
+    // The API puts a human-readable reason in `message` or `error`.
+    let detail = "";
+    try {
+      const body = (await response.json()) as { message?: string; error?: string };
+      detail = body.message || body.error || "";
+    } catch {
+      // non-JSON body — fall back to the generic messages below
+    }
+    const suffix = detail ? ` (${detail})` : "";
     if (response.status === 401) {
+      // A missing or invalid key falls back to the anonymous demo pool;
+      // 401 means that pool is used up for today.
       throw new Error(
-        "TNT Risk-Data API rejected the key — check TNT_RISK_API_KEY is set correctly."
+        `TNT Risk-Data API: no valid API key and today's anonymous demo quota is used up${suffix}. Set TNT_RISK_API_KEY (free key, 15 requests/day: https://www.tnt-audit.com/risk-api).`
       );
     }
     if (response.status === 402) {
       throw new Error(
-        "TNT Risk-Data API daily quota exceeded for this key. Get a new free key at https://www.tnt-audit.com/risk-api."
+        `TNT Risk-Data API: free daily quota or credit used up${suffix}. Wait for the daily reset (UTC), top up the key's balance at https://www.tnt-audit.com/risk-api, or pay per call via x402: https://www.tnt-audit.com/api/v1/token-risk/x402?mint=${encodeURIComponent(mint)} ($0.02 USDC on Solana).`
       );
+    }
+    if (response.status === 429) {
+      throw new Error(`TNT Risk-Data API rate limit hit${suffix}. Retry in a moment.`);
     }
     if (response.status === 400) {
       throw new Error(`Invalid mint address: ${mint}`);
     }
-    throw new Error(`TNT Risk-Data API error: HTTP ${response.status}`);
+    throw new Error(`TNT Risk-Data API error: HTTP ${response.status}${suffix}`);
   }
 
   return (await response.json()) as TokenRiskResult;
